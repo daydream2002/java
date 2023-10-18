@@ -1,6 +1,7 @@
 package JavaLearn.studentSystem;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class app {
@@ -11,13 +12,13 @@ public class app {
         while (true){
             System.out.println("1:注册");
             System.out.println("2.登录");
-            System.out.println("4.查看用户信息");
+            System.out.println("3.忘记密码");
             System.out.println("忘记密码");
             choose= sc.next();
             switch (choose){
                 case "1"-> register(list);
-                case "2"-> System.out.println("请重新输入");
-                case "3"-> System.out.println("请重新输入");
+                case "2"-> login(list);
+                case "3"-> changepassword(list);
                 case "4"-> test(list);
                 default -> {
                     System.out.println("请重新输入");
@@ -25,6 +26,70 @@ public class app {
                 }
             }
         }
+    }
+    public static void changepassword(ArrayList<User> list){
+
+    }
+    public static void login(ArrayList<User> list){
+        Scanner sc=new Scanner(System.in);
+        for (int i=0;i<3;i++) {
+            String username;
+            System.out.println("请输入用户名");
+            username= sc.next();
+            int index=getUserIndex(list,username);
+            if (index==-1){
+                System.out.println("用户不存在");
+                return;
+            }
+            System.out.println("请输入密码");
+            String password=sc.next();
+            while (true) {
+                String code=generateCode();
+                System.out.println("验证码:"+code);
+                System.out.println("请输入验证码");
+                String verifycode=sc.next();
+                if (!code.equals(verifycode)){
+                    System.out.println("验证码错误，请重新输入验证码");
+                }else {
+                    break;
+                }
+            }
+            if (list.get(index).getPassword().equals(password)){
+                System.out.println("登录成功");
+                break;
+            }else {
+                System.out.println("密码错误重新输入,还有"+(2-i)+"机会");
+            }
+        }
+
+
+    }
+    public static String generateCode(){
+        Random rd=new Random();
+        char[] ch=new char[52];
+        for (int i = 0; i < 26; i++) {
+            ch[i]= (char) ('a'+i);
+        }
+        for (int i = 26; i < 52; i++) {
+            ch[i]= (char) ('A'+i-26);
+        }
+        int index= rd.nextInt(5);
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            int codeindex= rd.nextInt(52);
+            code.append(ch[codeindex]);
+        }
+        int number=rd.nextInt(10);
+        code.insert(index,number);
+        return code.toString();
+    }
+    public static int getUserIndex(ArrayList<User> list,String username){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUsername().equals(username)){
+                return i;
+            }
+        }
+        return -1;
     }
     public static void register(ArrayList<User> list){
         Scanner sc=new Scanner(System.in);
