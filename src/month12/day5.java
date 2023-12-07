@@ -10,14 +10,35 @@ import java.util.concurrent.*;
  */
 public class day5 {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+        System.out.println(verifyName("wangjiahao"));
+        System.out.println(verifyPassword("W2002"));
+    }
+    private static boolean verifyName(String name) {
+        //长度6-18
+        if (name.length() < 6 || name.length() > 18)
+            return false;
+        //只能是字母
+        for (int i = 0; i < name.length(); i++) {
+            if (!(name.charAt(i) >= 'a' && name.charAt(i) <= 'z' || name.charAt(i) >= 'A' && name.charAt(i) <= 'Z'))
+                return false;
+        }
+        return true;
+    }
 
-        ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(
-                3,6,60,
-                TimeUnit.SECONDS,new ArrayBlockingQueue<>(3),Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.AbortPolicy()
-        );
-
-
+    private static boolean verifyPassword(String password) {
+        if (password.length() < 3 || password.length() > 8)
+            System.out.println("false1");
+        //第一位为字母
+        if (!(password.charAt(0) >= 'a' && password.charAt(0) <= 'z' || password.charAt(0) >= 'A' && password.charAt(0) <= 'Z'))
+            System.out.println("false2");
+        //后面几位是纯数字
+        for (int i = 1; i < password.length(); i++) {
+            if ((password.charAt(i) >= '0' && password.charAt(i) <= '9'))
+                System.out.println("false3");
+            if (password.charAt(0)>='0')
+                System.out.println("a");
+        }
+        return true;
     }
 }
 
