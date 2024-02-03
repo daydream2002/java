@@ -8,23 +8,23 @@ import java.util.ArrayList;
  */
 public class no_437 {
     public int pathSum(TreeNode root, int targetSum) {
-        ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
-        ArrayList<TreeNode> list = new ArrayList<>();
-        list.add(root);
-        while (!list.isEmpty()){
-            ArrayList<Integer> list1 = new ArrayList<>();
-            int len=list.size();
-            for (int i = 0; i < len; i++) {
-                TreeNode node = list.removeFirst();
-                list1.add(node.val);
-                if (node.left!=null)
-                    list.add(node.left);
-                if (node.right!=null)
-                    list.add(node.right);
-            }
-            arrayLists.add(list1);
-        }
+        if (root == null)
+            return 0;
+        int ans = 0;
+        ans += rootSum(root, targetSum);
+        ans += pathSum(root.left, targetSum);
+        ans += pathSum(root.right, targetSum);
+        return ans;
+    }
 
-        return targetSum;
+    public int rootSum(TreeNode root, int targetSum) {
+        if (root == null)
+            return 0;
+        int ans = 0;
+        if (root.val == targetSum)
+            ans++;
+        ans += rootSum(root.left, targetSum - root.val);
+        ans += rootSum(root.right, targetSum - root.val);
+        return ans;
     }
 }
