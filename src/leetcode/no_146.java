@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,14 +7,11 @@ import java.util.Map;
  * @author wjh
  * @date 2023/12/13 8:19
  */
-public class no_146 {
 
-}
-
-class LRUCache extends LinkedHashMap {
+class no_146 extends LinkedHashMap {
     private int cap;
 
-    public LRUCache(int capacity) {
+    public no_146(int capacity) {
         super(capacity , 0.75F,true);
         this.cap = capacity;
     }
